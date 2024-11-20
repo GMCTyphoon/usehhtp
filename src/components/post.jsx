@@ -8,7 +8,7 @@ const requestConfig = {
   },
 };
 
-export default function PostTodo() {
+const PostTodo = () => {
   const { error, sendRequest } = useHttp(
     "https://jsonplaceholder.typicode.com/posts",
     requestConfig
@@ -33,4 +33,6 @@ export default function PostTodo() {
       </form>
     </>
   );
-}
+};
+
+export default PostTodo;

@@ -33,7 +33,6 @@ export default function useHttp(url, config, initialData) {
   useEffect(() => {
     const isGetRequest =
       (config && (config.method === "GET" || !config.method)) || !config;
-    console.log(isGetRequest);
     if (isGetRequest) {
       sendRequest();
     }

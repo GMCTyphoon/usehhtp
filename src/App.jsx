@@ -1,6 +1,5 @@
 import { useState } from "react";
 import "./App.css";
-import PostTodo from "./components/post";
 import Todos from "./components/todos";
 import Chess from "./components/chess";
 
@@ -15,15 +14,30 @@ function App() {
 
   return (
     <>
-      <div id="button">
-        <button onClick={clickHandlerHideChess}>Посты</button>
-        <button onClick={clickHandler}>Шахматная доска</button>
-      </div>
+      <header id="header">
+        <div
+          style={{
+            fontWeight: showChess ? "bold" : "",
+            textShadow: showChess ? "1px 1px 2px rgba(0, 0, 0, 0.5)" : "",
+          }}
+          onClick={clickHandlerHideChess}
+        >
+          Посты
+        </div>
+        <div
+          style={{
+            fontWeight: showChess ? "" : "bold",
+            textShadow: showChess ? "" : "1px 1px 2px rgba(0, 0, 0, 0.5)",
+          }}
+          onClick={clickHandler}
+        >
+          Шахматная доска
+        </div>
+      </header>
       {showChess ? (
         <Chess />
       ) : (
         <div>
-          <PostTodo />
           <Todos />
         </div>
       )}

@@ -1,12 +1,17 @@
-#button {
+#header {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid #ccc;
+  position: sticky;
+  top: 0;
+  background-color: #beb1b1;
+  padding: 20px 0;
+  width: auto;
+  border-radius: 10px;
 }
-#button button {
+#header div {
   width: 10rem;
-  }
-div {
-  justify-content: center;
+  text-align: center;
+  color: rgb(0, 0, 0);
+
 }

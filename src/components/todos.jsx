@@ -1,4 +1,5 @@
 import useHttp from "../hooks/useHttp";
+import PostTodo from "./post";
 
 const requestConfig = {};
 
@@ -19,6 +20,7 @@ export default function Todos() {
 
   return (
     <>
+      <PostTodo />
       <ul>
         {data.map((item) => (
           <li key={item.id}>{item.title}</li>
