@@ -1,0 +1,9 @@
+#button {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border: 1px solid #ccc;
+}
+div {
+  justify-content: center;
+}
