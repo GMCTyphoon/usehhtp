@@ -1,5 +1,5 @@
 import styles from "./chess.module.css";
-
+//map
 export default function Chess() {
   return (
     <div className={styles.container}>

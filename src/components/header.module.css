@@ -1,0 +1,17 @@
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  background-color: #beb1b1;
+  padding: 20px 0;
+  width: auto;
+  border-radius: 10px;
+}
+header div {
+  width: 10rem;
+  text-align: center;
+  color: rgb(75, 26, 26);
+  cursor: pointer;
+}
