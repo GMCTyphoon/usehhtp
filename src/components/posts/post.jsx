@@ -10,7 +10,7 @@ const requestConfig = {
   },
 };
 
-const PostTodo = ({ onDataChange }) => {
+const PostTodo = ({ onUserInput }) => {
   const { error, sendRequest } = useHttp(
     "https://jsonplaceholder.typicode.com/posts",
     requestConfig
@@ -29,26 +29,30 @@ const PostTodo = ({ onDataChange }) => {
       })
     );
 
-    onDataChange(inputData);
+    onUserInput(inputData);
     dataRef.current.value = "";
   };
 
   return (
     <>
-      <form className={styles} onSubmit={submitHandler}>
-        <div>
-          <label htmlFor="data">Input data</label>
-          <input id="data" ref={dataRef} />
+      <form className={styles.form} onSubmit={submitHandler}>
+        <div className={styles.formDiv}>
+          <label className={styles.formDivLabel} htmlFor="data">
+            Input data
+          </label>
+          <input className={styles.formDivInput} id="data" ref={dataRef} />
           {error && <p> Failed to submit order message={error} </p>}
         </div>
-        <button type="submit">Send</button>
+        <button className={styles.button} type="submit">
+          Send
+        </button>
       </form>
     </>
   );
 };
 
 PostTodo.propTypes = {
-  onDataChange: PropTypes.func.isRequired,
+  onUserInput: PropTypes.func.isRequired,
 };
 
 export default PostTodo;

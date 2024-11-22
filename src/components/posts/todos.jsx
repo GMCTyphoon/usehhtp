@@ -1,56 +1,40 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useHttp from "../../hooks/useHttp";
 import PostTodo from "./post";
 import styles from "./todos.module.css";
+import classNames from "classnames";
 
 const requestConfig = {};
-const litsOnPage = 5;
+const itemsOnPage = 5;
 
 export default function Todos() {
-  const [data1, setData1] = useState([]);
+  const [dataStore, setDataStore] = useState([]);
+  const [pageNumber, setPageNumber] = useState(1);
   const { data, isLoading, error } = useHttp(
     "https://jsonplaceholder.typicode.com/posts",
     requestConfig,
     []
   );
-  const data2 = data.concat(data1);
-  const initialValue = data2.slice(0, 5);
-  console.log(initialValue)
-  console.log(data)
-  const [todosOnPage, setTodosOnPage] = useState([
-    { title: "1", id: "1" },
-    { title: "2", id: "2" },
-    { title: "3", id: "3" },
-    { title: "4", id: "4" },
-    { title: "5", id: "5" },
-  ]);
-  const handleDataChange = (newData) => {
-    setData1((prevData) => [...prevData, newData]);
-    todosOnPage.length < litsOnPage &&
-      setTodosOnPage((prevData) => [...prevData, newData]);
+
+  useEffect(() => {
+    if (data.length) {
+      setDataStore(data);
+    }
+  }, [data]);
+
+  const userInputHandler = (newData) => {
+    setDataStore(dataStore.concat([newData]));
   };
 
-  // Логика страниц начало
-  let postsLength = data2.length;
-  let pages = Math.ceil(postsLength / litsOnPage);
-  // console.log(postsLength);
-  let arrayPages = new Array();
-  // console.log(arrayPages);
-  for (let i = 1; i <= pages; i++) {
-    arrayPages.push(i);
+  // Логика страниц
+  const start = pageNumber * itemsOnPage - itemsOnPage;
+  const end = pageNumber * itemsOnPage;
+  const pagesCountArray = new Array();
+  for (let i = 1; i <= Math.ceil(dataStore.length / itemsOnPage); i++) {
+    pagesCountArray.push(i);
   }
-  // console.log(arrayPages);
-  // логика страниц конец
-  const pageContentHandler = (event) => {
-    const pageNum = +event.target.textContent;
-    const end = litsOnPage * pageNum;
-    const start = end - litsOnPage;
-    const todosPage = data2.slice(start, end);
 
-    setTodosOnPage(todosPage);
-    console.log(pageNum);
-    console.log(todosPage);
-  };
+  
   if (isLoading) {
     return <p className="center">Fethching todos...</p>;
   }
@@ -61,15 +45,25 @@ export default function Todos() {
 
   return (
     <>
-      <PostTodo onDataChange={handleDataChange} />
+      <PostTodo onUserInput={userInputHandler} />
       <ul className={styles.ul}>
-        {todosOnPage.map((item) => (
-          <li key={item.id}>{item.title}</li>
+        {dataStore.slice(start, end).map((item) => (
+          <li className={styles.li} key={item.id}>
+            {item.title}
+          </li>
         ))}
       </ul>
       <ul className={styles.pagination}>
-        {arrayPages.map((item) => (
-          <li key={item} onClick={pageContentHandler}>
+        {pagesCountArray.map((item, index) => (
+          <li
+            className={classNames(styles.li, styles.paginationLi, {
+              [styles.active]: pageNumber === index + 1,
+            })}
+            key={item}
+            onClick={() => {
+              setPageNumber(index + 1);
+            }}
+          >
             {item}
           </li>
         ))}
