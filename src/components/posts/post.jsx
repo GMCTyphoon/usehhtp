@@ -22,12 +22,7 @@ const PostTodo = ({ onUserInput }) => {
       title: dataRef.current.value,
       id: new Date().toISOString(),
     };
-    sendRequest(
-      JSON.stringify({
-        title: inputData.title,
-        id: new Date().toISOString(),
-      })
-    );
+    sendRequest(JSON.stringify(inputData));
 
     onUserInput(inputData);
     dataRef.current.value = "";
