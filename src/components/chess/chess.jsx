@@ -1,6 +1,6 @@
 import styles from "./chess.module.css";
 //map
-export default function Chess() {
+export function Chess() {
   return (
     <div className={styles.container}>
       <div className={styles.square}>1</div>
