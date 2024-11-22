@@ -1,5 +1,6 @@
 .container {
   display: grid;
+  justify-content: center;
   grid-template-columns: repeat(8, 50px);
   /* grid-template-rows: repeat(8, 1fr); */
 }
