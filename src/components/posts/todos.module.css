@@ -1,0 +1,30 @@
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+ul li {
+  background-color: #beb1b1;
+  color: rgb(75, 26, 26);
+  padding: 5px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.pagination {
+  display: flex;
+  width: auto;
+}
+
+.pagination li {
+  text-decoration: none;
+  font-size: smaller;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pagination li:hover {
+  background-color: #a89191;
+}
