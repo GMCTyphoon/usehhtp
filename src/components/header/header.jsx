@@ -1,11 +1,14 @@
 import PropTypes from "prop-types";
 import styles from "./header.module.css";
+import classNames from "classnames";
 
 export default function Header({ selectedTab, setSelectedTab }) {
   return (
-    <header className={styles.header} id="header">
+    <header>
       <div
-        className={selectedTab === "posts" ? styles.active : undefined}
+        className={classNames(styles.headerItem, {
+          [styles.active]: selectedTab === "posts",
+        })}
         onClick={() => {
           setSelectedTab("posts");
         }}
@@ -13,7 +16,9 @@ export default function Header({ selectedTab, setSelectedTab }) {
         Посты
       </div>
       <div
-        className={selectedTab === "chess" ? styles.active : undefined}
+        className={classNames(styles.headerItem, {
+          [styles.active]: selectedTab === "chess",
+        })}
         onClick={() => {
           setSelectedTab("chess");
         }}
