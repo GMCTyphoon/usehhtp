@@ -10,8 +10,8 @@ export function Chess() {
   const [cellCoords, setCellCoords] = useState({ x: 0, y: 0 });
 
   const rowClickHandler = (rowIndex, colIndex) => {
-    setCellCoords({ x: rowIndex + 1, y: colIndex + 1 });
-    console.log(`'x:'${rowIndex + 1} 'y:'${colIndex + 1}`);
+    setCellCoords({ x: colIndex + 1, y: rowIndex + 1 });
+    console.log(`'x:'${colIndex + 1} 'y:'${rowIndex + 1}`);
   };
 
   return (
@@ -55,8 +55,8 @@ export const ChessRows = ({ cellClickHandler, cellCoords, colIndex }) => {
 export const Cell = ({ onClick, cellCoords, colIndex, rowIndex }) => {
   const isWhite = (colIndex + 1 + (rowIndex + 1)) % 2 === 0;
   const isActive =
-    (cellCoords.x === chessSize ? cellCoords.x - 2 : cellCoords.x) ===
-      rowIndex && cellCoords.y === colIndex + 1;
+    (cellCoords.y === chessSize ? cellCoords.y - 2 : cellCoords.y) ===
+      rowIndex && cellCoords.x === colIndex + 1;
 
   return (
     <div
