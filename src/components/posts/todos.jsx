@@ -7,7 +7,7 @@ import classNames from "classnames";
 const requestConfig = {};
 const itemsOnPage = 5;
 
-export default function Todos() {
+export function Todos() {
   const [dataStore, setDataStore] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
   const { data, isLoading, error } = useHttp(
@@ -34,7 +34,6 @@ export default function Todos() {
     pagesCountArray.push(i);
   }
 
-  
   if (isLoading) {
     return <p className="center">Fethching todos...</p>;
   }
@@ -62,8 +61,7 @@ export default function Todos() {
             key={item}
             onClick={() => {
               setPageNumber(index + 1);
-            }}
-          >
+            }}>
             {item}
           </li>
         ))}

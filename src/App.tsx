@@ -1,13 +1,12 @@
-import "./App.css";
-import Todos from "./components/posts/todos";
-import Chess from "./components/chess/chess";
+import { Todos } from "./components/posts/todos";
+import { Chess } from "./components/chess/chess";
 import { useState } from "react";
-import Header from "./components/header/header";
+import { Header } from "./components/header/header";
 
 function App() {
-  const [selectedTab, setSelectedTab] = useState("posts");
+  const [selectedTab, setSelectedTab] = useState<"posts" | "chess">("posts");
 
-  const handleSelectedTab = (selectedTab) => {
+  const handleSelectedTab = (selectedTab: "posts" | "chess") => {
     setSelectedTab(selectedTab);
   };
 
