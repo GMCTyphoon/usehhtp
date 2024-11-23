@@ -9,9 +9,13 @@ const chessSizeArray = new Array(chessSize).fill(0);
 export function Chess() {
   const [cellCoords, setCellCoords] = useState({ x: 0, y: 0 });
 
-  const rowClickHandler = (rowIndex, colIndex) => {
-    setCellCoords({ x: colIndex + 1, y: rowIndex + 1 });
-    console.log(`'x:'${colIndex + 1} 'y:'${rowIndex + 1}`);
+  const rowClickHandler = ({ x, y }) => {
+    console.log(x, y);
+    return (event) => {
+      setCellCoords({ x, y });
+      console.log(`'x:'${x} 'y:'${y}`);
+      console.log(event);
+    };
   };
 
   return (
@@ -20,9 +24,7 @@ export function Chess() {
         <ChessRows
           cellCoords={cellCoords}
           colIndex={colIndex}
-          cellClickHandler={(rowIndex) => {
-            rowClickHandler(rowIndex, colIndex);
-          }}
+          cellClickHandler={rowClickHandler}
           key={colIndex}
         >
           {colIndex}
@@ -40,9 +42,7 @@ export const ChessRows = ({ cellClickHandler, cellCoords, colIndex }) => {
           colIndex={colIndex}
           rowIndex={rowIndex}
           cellCoords={cellCoords}
-          onClick={() => {
-            cellClickHandler(rowIndex);
-          }}
+          handleClick={cellClickHandler}
           key={rowIndex}
         >
           {rowIndex}
@@ -52,7 +52,7 @@ export const ChessRows = ({ cellClickHandler, cellCoords, colIndex }) => {
   );
 };
 
-export const Cell = ({ onClick, cellCoords, colIndex, rowIndex }) => {
+export const Cell = ({ handleClick, cellCoords, colIndex, rowIndex }) => {
   const isWhite = (colIndex + 1 + (rowIndex + 1)) % 2 === 0;
   const isActive =
     (cellCoords.y === chessSize ? cellCoords.y - 2 : cellCoords.y) ===
@@ -64,7 +64,7 @@ export const Cell = ({ onClick, cellCoords, colIndex, rowIndex }) => {
         [styles.cellWhite]: isWhite,
         [styles.cellActive]: isActive,
       })}
-      onClick={onClick}
+      onClick={handleClick({ x: colIndex + 1, y: rowIndex + 1 })}
     ></div>
   );
 };
@@ -76,7 +76,7 @@ ChessRows.propTypes = {
 };
 
 Cell.propTypes = {
-  onClick: PropTypes.func.isRequired,
+  handleClick: PropTypes.func.isRequired,
   cellCoords: PropTypes.object.isRequired,
   rowIndex: PropTypes.number.isRequired,
   colIndex: PropTypes.number.isRequired,

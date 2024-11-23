@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import useHttp from "../../hooks/useHttp";
 import PropTypes from "prop-types";
-import styles from "./post.module.css";
+import styles from "./post.module.scss";
 
 const requestConfig = {
   method: "POST",
