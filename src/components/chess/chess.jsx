@@ -44,11 +44,10 @@ export function Chess() {
 }
 
 export const ChessRows = ({ cellClickHandler, cellCoords, colIndex }) => {
-  let nameCols = chessChars[colIndex + 1];
   return (
     <div
-      data-char={nameCols}
-      className={classNames(styles.nameTopRow, styles.nameBotRow)}
+      data-char={chessChars[colIndex + 1]}
+      className={classNames(styles.nameRow)}
     >
       {chessSizeArray.map((item, rowIndex) => (
         <Cell
@@ -84,7 +83,7 @@ export const Cell = ({ handleClick, cellCoords, colIndex, rowIndex }) => {
         [styles.cellWhite]: isWhite,
         [styles.cellActive]: isActive,
         [styles.nameLeftCol]: colIndex === 0,
-        [styles.nameRightCol]: colIndex === chessSizeArray.length - 1,
+        [styles.nameRightCol]: colIndex === chessSize - 1,
       })}
       onClick={handleClick({ x: colIndex + 1, y: rowIndex + 1 })}
     ></div>

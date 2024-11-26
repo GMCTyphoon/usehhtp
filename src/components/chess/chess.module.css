@@ -35,14 +35,14 @@
   top: 10px;
 }
 
-.nameTopRow::before {
+.nameRow::before {
   content: attr(data-char);
   position: relative;
   left: 15px;
   top: -5px; /* Сдвигаем псевдоэлемент вверх */
 }
 
-.nameBotRow::after {
+.nameRow::after {
   content: attr(data-char);
   position: relative;
   left: 15px;

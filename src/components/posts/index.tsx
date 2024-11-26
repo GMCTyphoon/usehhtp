@@ -4,7 +4,7 @@ import PostTodo from "./post";
 import styles from "./todos.module.scss";
 import classNames from "classnames";
 import React from "react";
-import Todo from "../../models/todo";
+import { Todo } from "./types";
 
 const requestConfig = {};
 const itemsOnPage = 5;
@@ -24,17 +24,16 @@ export const Todos: React.FC = () => {
     }
   }, [data]);
 
-  const userInputHandler = (inputData: string) => {
-    const newTodo = new Todo(inputData);
+  const userInputHandler = (inputData: Todo) => {
     setDataStore((prevData) => {
-      return prevData.concat(newTodo);
+      return prevData.concat(inputData);
     });
   };
 
   // Логика страниц
-  const start:number = pageNumber * itemsOnPage - itemsOnPage;
+  const start = pageNumber * itemsOnPage - itemsOnPage;
   const end = pageNumber * itemsOnPage;
-  const pagesCountArray = new Array();
+  const pagesCountArray: number[] = new Array();
   for (let i = 1; i <= Math.ceil(dataStore.length / itemsOnPage); i++) {
     pagesCountArray.push(i);
   }
@@ -46,7 +45,6 @@ export const Todos: React.FC = () => {
   if (error) {
     return <p>Failed to fetch todos</p>;
   }
-  console.log(dataStore);
   return (
     <>
       <PostTodo onUserInput={userInputHandler} />

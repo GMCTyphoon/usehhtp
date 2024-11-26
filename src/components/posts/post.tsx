@@ -1,8 +1,9 @@
 import { useRef } from "react";
 import useHttp from "../../hooks/useHttp";
-import PropTypes from "prop-types";
-import styles from "./post.module.scss";
+import styles from "./todos.module.scss";
 import React from "react";
+import { Todo } from "./types";
+import { TodoProps } from "./types";
 
 const requestConfig = {
   method: "POST",
@@ -11,9 +12,7 @@ const requestConfig = {
   },
 };
 
-interface TodoProps {
-  onUserInput: (inputText: string) => void;
-}
+
 
 const PostTodo: React.FC<TodoProps> = ({ onUserInput }) => {
   const { error, sendRequest } = useHttp(
@@ -23,13 +22,13 @@ const PostTodo: React.FC<TodoProps> = ({ onUserInput }) => {
   const dataRef = useRef<HTMLInputElement>(null);
   const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
-    const inputData: { title: string; id: string } = {
+    const inputData: Todo = {
       title: dataRef.current!.value,
       id: new Date().toISOString(),
     };
     sendRequest(JSON.stringify(inputData));
 
-    onUserInput(inputData.title);
+    onUserInput(inputData);
     dataRef.current!.value = "";
   };
 
@@ -49,10 +48,6 @@ const PostTodo: React.FC<TodoProps> = ({ onUserInput }) => {
       </form>
     </>
   );
-};
-
-PostTodo.propTypes = {
-  onUserInput: PropTypes.func.isRequired,
 };
 
 export default PostTodo;
