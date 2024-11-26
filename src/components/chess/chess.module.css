@@ -1,47 +1,50 @@
 .container {
-  display: grid;
-  justify-content: center;
-  grid-template-columns: repeat(8, 50px);
-  /* grid-template-rows: repeat(8, 1fr); */
-}
-
-.container div {
   display: flex;
-  align-items: center;
   justify-content: center;
-  font-size: 20px;
-  border: 2px solid #000000;
+  margin: 1rem;
+}
+
+.cell {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  border: 1px solid #000;
   box-sizing: border-box;
-  width: 50px;
-  height: 50px;
+  background-color: #000;
 }
 
-/* Чередование цветов клеток */
-.container .square:nth-child(8n + 1),
-.container .square:nth-child(8n + 3),
-.container .square:nth-child(8n + 5),
-.container .square:nth-child(8n + 7) {
-  background-color: #252323;
+.cellWhite {
+  background-color: white;
 }
 
-.container .square:nth-child(8n + 2),
-.container .square:nth-child(8n + 4),
-.container .square:nth-child(8n + 6),
-.container .square:nth-child(8n + 8) {
-  background-color: #fff;
+.cellActive {
+  background-color: red;
+  border: none;
 }
 
-/* Чередование цветов клеток */
-.container .square2:nth-child(8n + 1),
-.container .square2:nth-child(8n + 3),
-.container .square2:nth-child(8n + 5),
-.container .square2:nth-child(8n + 7) {
-  background-color: #ffffff;
+.nameLeftCol::before {
+  content: attr(data-number);
+  position: relative;
+  left: -20px; /* Сдвигаем псевдоэлемент влево */
+  top: 10px;
+}
+.nameRightCol::after {
+  content: attr(data-number);
+  position: relative;
+  left: 45px; /* Сдвигаем псевдоэлемент вправо */
+  top: 10px;
 }
 
-.container .square2:nth-child(8n + 2),
-.container .square2:nth-child(8n + 4),
-.container .square2:nth-child(8n + 6),
-.container .square2:nth-child(8n + 8) {
-  background-color: #252323;
+.nameRow::before {
+  content: attr(data-char);
+  position: relative;
+  left: 15px;
+  top: -5px; /* Сдвигаем псевдоэлемент вверх */
+}
+
+.nameRow::after {
+  content: attr(data-char);
+  position: relative;
+  left: 15px;
+  top: 5px; /* Сдвигаем псевдоэлемент вниз */
 }

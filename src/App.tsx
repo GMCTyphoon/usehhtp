@@ -1,4 +1,4 @@
-import { Todos } from "./components/posts/todos";
+import { Todos } from "./components/posts/index";
 import { Chess } from "./components/chess/chess";
 import { useState } from "react";
 import { Header } from "./components/header/header";
