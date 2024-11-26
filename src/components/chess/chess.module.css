@@ -25,7 +25,7 @@
 .nameLeftCol::before {
   content: attr(data-number);
   position: relative;
-  left: -15px; /* Сдвигаем псевдоэлемент влево */
+  left: -20px; /* Сдвигаем псевдоэлемент влево */
   top: 10px;
 }
 .nameRightCol::after {
@@ -39,12 +39,12 @@
   content: attr(data-char);
   position: relative;
   left: 15px;
-  top: -20px; /* Сдвигаем псевдоэлемент вверх */
+  top: -5px; /* Сдвигаем псевдоэлемент вверх */
 }
 
 .nameBotRow::after {
   content: attr(data-char);
   position: relative;
   left: 15px;
-  top: 40px; /* Сдвигаем псевдоэлемент вниз */
+  top: 5px; /* Сдвигаем псевдоэлемент вниз */
 }

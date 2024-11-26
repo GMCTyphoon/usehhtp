@@ -3,8 +3,20 @@ import styles from "./chess.module.css";
 import { useState } from "react";
 import classNames from "classnames";
 //map
-const chessSize = 8;
+const chessSize = 10;
 const chessSizeArray = new Array(chessSize).fill(0);
+const chessChars = {
+  1: "A",
+  2: "B",
+  3: "C",
+  4: "D",
+  5: "E",
+  6: "F",
+  7: "G",
+  8: "H",
+  9: "I",
+  10: "J",
+};
 
 export function Chess() {
   const [cellCoords, setCellCoords] = useState({ x: 0, y: 0 });
@@ -32,8 +44,12 @@ export function Chess() {
 }
 
 export const ChessRows = ({ cellClickHandler, cellCoords, colIndex }) => {
+  let nameCols = chessChars[colIndex + 1];
   return (
-    <div>
+    <div
+      data-char={nameCols}
+      className={classNames(styles.nameTopRow, styles.nameBotRow)}
+    >
       {chessSizeArray.map((item, rowIndex) => (
         <Cell
           colIndex={colIndex}
@@ -51,39 +67,24 @@ export const ChessRows = ({ cellClickHandler, cellCoords, colIndex }) => {
 
 export const Cell = ({ handleClick, cellCoords, colIndex, rowIndex }) => {
   const isWhite = (colIndex + 1 + (rowIndex + 1)) % 2 === 0;
+
   const isActive =
     (cellCoords.y === chessSize ? cellCoords.y - 2 : cellCoords.y) ===
       rowIndex && cellCoords.x === colIndex + 1;
+
   const isLeftCol = colIndex === 0;
-  const isRightCol = colIndex === 7;
-  const isTopRow = rowIndex === 0;
-  const isBotRow = rowIndex === 7;
+  const isRightCol = colIndex === chessSizeArray.length - 1;
 
-  function getEnglishAlphabetLetter(number) {
-    if (number < 1 || number > 26) {
-      return "Invalid number";
-    }
-    return String.fromCharCode(64 + number); // ASCII код 'A' = 65
-  }
-
-  let nameRows;
-  if (rowIndex === 0 || rowIndex === 7) {
-    nameRows = getEnglishAlphabetLetter(colIndex + 1);
-  }
-
-  let nameCols = isLeftCol || isRightCol ? chessSize - rowIndex : nameRows;
+  let nameRows = isLeftCol || isRightCol ? chessSize - rowIndex : undefined;
 
   return (
     <div
-      data-number={nameCols}
-      data-char={nameRows}
+      data-number={nameRows}
       className={classNames(styles.cell, {
         [styles.cellWhite]: isWhite,
         [styles.cellActive]: isActive,
-        [styles.nameLeftCol]: isLeftCol,
-        [styles.nameRightCol]: isRightCol,
-        [styles.nameTopRow]: isTopRow,
-        [styles.nameBotRow]: isBotRow,
+        [styles.nameLeftCol]: colIndex === 0,
+        [styles.nameRightCol]: colIndex === chessSizeArray.length - 1,
       })}
       onClick={handleClick({ x: colIndex + 1, y: rowIndex + 1 })}
     ></div>

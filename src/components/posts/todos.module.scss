@@ -22,17 +22,17 @@
   width: auto;
   flex-direction: row;
   list-style-type: none;
-}
 
-.paginationLi {
-  text-decoration: none;
-  font-size: smaller;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
+  & .paginationItem {
+    text-decoration: none;
+    font-size: smaller;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
 
-.paginationLi:hover {
-  background-color: #a89191;
+  & .paginationItem:hover {
+    background-color: #a89191;
+  }
 }
 
 .active {

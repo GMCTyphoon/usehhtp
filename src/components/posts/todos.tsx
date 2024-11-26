@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import useHttp from "../../hooks/useHttp";
 import PostTodo from "./post";
-import styles from "./todos.module.css";
+import styles from "./todos.module.scss";
 import classNames from "classnames";
+import React from "react";
+import Todo from "../../models/todo";
 
 const requestConfig = {};
 const itemsOnPage = 5;
 
-export function Todos() {
-  const [dataStore, setDataStore] = useState([]);
-  const [pageNumber, setPageNumber] = useState(1);
+export const Todos: React.FC = () => {
+  const [dataStore, setDataStore] = useState<Todo[]>([]);
+  const [pageNumber, setPageNumber] = useState<number>(1);
   const { data, isLoading, error } = useHttp(
     "https://jsonplaceholder.typicode.com/posts",
     requestConfig,
@@ -22,12 +24,15 @@ export function Todos() {
     }
   }, [data]);
 
-  const userInputHandler = (newData) => {
-    setDataStore(dataStore.concat([newData]));
+  const userInputHandler = (inputData: string) => {
+    const newTodo = new Todo(inputData);
+    setDataStore((prevData) => {
+      return prevData.concat(newTodo);
+    });
   };
 
   // Логика страниц
-  const start = pageNumber * itemsOnPage - itemsOnPage;
+  const start:number = pageNumber * itemsOnPage - itemsOnPage;
   const end = pageNumber * itemsOnPage;
   const pagesCountArray = new Array();
   for (let i = 1; i <= Math.ceil(dataStore.length / itemsOnPage); i++) {
@@ -41,7 +46,7 @@ export function Todos() {
   if (error) {
     return <p>Failed to fetch todos</p>;
   }
-
+  console.log(dataStore);
   return (
     <>
       <PostTodo onUserInput={userInputHandler} />
@@ -55,17 +60,18 @@ export function Todos() {
       <ul className={styles.pagination}>
         {pagesCountArray.map((item, index) => (
           <li
-            className={classNames(styles.li, styles.paginationLi, {
+            className={classNames(styles.li, styles.paginationItem, {
               [styles.active]: pageNumber === index + 1,
             })}
-            key={item}
+            key={index}
             onClick={() => {
               setPageNumber(index + 1);
-            }}>
+            }}
+          >
             {item}
           </li>
         ))}
       </ul>
     </>
   );
-}
+};
