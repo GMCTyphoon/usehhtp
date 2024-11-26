@@ -45,6 +45,7 @@ export const Todos: React.FC = () => {
   if (error) {
     return <p>Failed to fetch todos</p>;
   }
+  console.log(dataStore);
   return (
     <>
       <PostTodo onUserInput={userInputHandler} />
