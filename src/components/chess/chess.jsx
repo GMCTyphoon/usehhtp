@@ -10,11 +10,8 @@ export function Chess() {
   const [cellCoords, setCellCoords] = useState({ x: 0, y: 0 });
 
   const rowClickHandler = ({ x, y }) => {
-    console.log(x, y);
-    return (event) => {
+    return () => {
       setCellCoords({ x, y });
-      console.log(`'x:'${x} 'y:'${y}`);
-      console.log(event);
     };
   };
 
@@ -36,7 +33,7 @@ export function Chess() {
 
 export const ChessRows = ({ cellClickHandler, cellCoords, colIndex }) => {
   return (
-    <div className="строки или столбцы">
+    <div>
       {chessSizeArray.map((item, rowIndex) => (
         <Cell
           colIndex={colIndex}
@@ -57,12 +54,36 @@ export const Cell = ({ handleClick, cellCoords, colIndex, rowIndex }) => {
   const isActive =
     (cellCoords.y === chessSize ? cellCoords.y - 2 : cellCoords.y) ===
       rowIndex && cellCoords.x === colIndex + 1;
+  const isLeftCol = colIndex === 0;
+  const isRightCol = colIndex === 7;
+  const isTopRow = rowIndex === 0;
+  const isBotRow = rowIndex === 7;
+
+  function getEnglishAlphabetLetter(number) {
+    if (number < 1 || number > 26) {
+      return "Invalid number";
+    }
+    return String.fromCharCode(64 + number); // ASCII код 'A' = 65
+  }
+
+  let nameRows;
+  if (rowIndex === 0 || rowIndex === 7) {
+    nameRows = getEnglishAlphabetLetter(colIndex + 1);
+  }
+
+  let nameCols = isLeftCol || isRightCol ? chessSize - rowIndex : nameRows;
 
   return (
     <div
+      data-number={nameCols}
+      data-char={nameRows}
       className={classNames(styles.cell, {
         [styles.cellWhite]: isWhite,
         [styles.cellActive]: isActive,
+        [styles.nameLeftCol]: isLeftCol,
+        [styles.nameRightCol]: isRightCol,
+        [styles.nameTopRow]: isTopRow,
+        [styles.nameBotRow]: isBotRow,
       })}
       onClick={handleClick({ x: colIndex + 1, y: rowIndex + 1 })}
     ></div>
