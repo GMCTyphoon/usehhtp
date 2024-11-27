@@ -5,11 +5,13 @@ import styles from "./todos.module.scss";
 import classNames from "classnames";
 import React from "react";
 import { Todo } from "./types";
+import { useSelector } from "react-redux";
 
 const requestConfig = {};
 const itemsOnPage = 5;
 
 export const Todos: React.FC = () => {
+  const inputData = useSelector((state: any) => state.userInput);
   const [dataStore, setDataStore] = useState<Todo[]>([]);
   const [pageNumber, setPageNumber] = useState<number>(1);
   const { data, isLoading, error } = useHttp(
@@ -24,11 +26,11 @@ export const Todos: React.FC = () => {
     }
   }, [data]);
 
-  const userInputHandler = (inputData: Todo) => {
+  useEffect(() => {
     setDataStore((prevData) => {
       return prevData.concat(inputData);
     });
-  };
+  }, [inputData]);
 
   // Логика страниц
   const start = pageNumber * itemsOnPage - itemsOnPage;
@@ -46,9 +48,10 @@ export const Todos: React.FC = () => {
     return <p>Failed to fetch todos</p>;
   }
   console.log(dataStore);
+  console.log(inputData);
   return (
     <>
-      <PostTodo onUserInput={userInputHandler} />
+      <PostTodo />
       <ul className={styles.ul}>
         {dataStore.slice(start, end).map((item) => (
           <li className={styles.li} key={item.id}>
