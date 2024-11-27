@@ -4,5 +4,5 @@ export interface Todo {
 }
 
 export interface TodoProps {
-    onUserInput: (inputData: Todo) => void;
-  }
+  onUserInput: ({ id, title }: Todo) => void;
+}
