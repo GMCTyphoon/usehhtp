@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import useHttp from "../../hooks/useHttp";
 import PostTodo from "./post";
 import styles from "./todos.module.scss";
@@ -27,14 +27,22 @@ export const Todos: React.FC = () => {
   }, [data]);
 
   useEffect(() => {
+    if (!inputData.title) {
+      return;
+    }
     setDataStore((prevData) => {
       return prevData.concat(inputData);
     });
   }, [inputData]);
 
   // Логика страниц
-  const start = pageNumber * itemsOnPage - itemsOnPage;
-  const end = pageNumber * itemsOnPage;
+  const pageContent = useMemo(() => {
+    const start = pageNumber * itemsOnPage - itemsOnPage;
+    const end = pageNumber * itemsOnPage;
+
+    return dataStore.slice(start, end);
+  }, [pageNumber, dataStore]);
+
   const pagesCountArray: number[] = new Array();
   for (let i = 1; i <= Math.ceil(dataStore.length / itemsOnPage); i++) {
     pagesCountArray.push(i);
@@ -47,13 +55,14 @@ export const Todos: React.FC = () => {
   if (error) {
     return <p>Failed to fetch todos</p>;
   }
-  console.log(dataStore);
+
+  console.log(pageContent);
   console.log(inputData);
   return (
     <>
       <PostTodo />
       <ul className={styles.ul}>
-        {dataStore.slice(start, end).map((item) => (
+        {pageContent.map((item) => (
           <li className={styles.li} key={item.id}>
             {item.title}
           </li>
