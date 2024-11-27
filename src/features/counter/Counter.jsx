@@ -1,20 +1,16 @@
 import { useDispatch, useSelector } from "react-redux";
-import { decrement, increment, incrementByAmount } from "./counterSlice";
+import { decrement, increment } from "../../components/posts/inputSlice";
 
 export function Counter() {
-  const count = useSelector((state) => state.counter.value);
-  const userInput = useSelector((state) => state.userInput);
+  const countContent = useSelector((state) => state.generalSlice.count);
   const dispatch = useDispatch();
 
   return (
     <div>
-      <div>{userInput.title}</div>
-      <button onClick={() => dispatch(increment())}>Increment</button>
-      <button onClick={() => dispatch(incrementByAmount(10))}>
-        Increment by 10
-      </button>
-      <div>{count}</div>
-      <button onClick={() => dispatch(decrement())}>Decrement</button>
+      <button onClick={() => dispatch(increment(1))}>Increment</button>
+      <button onClick={() => dispatch(increment(10))}>Increment by 10</button>
+      <div>{countContent}</div>
+      <button onClick={() => dispatch(decrement(1))}>Decrement</button>
     </div>
   );
 }

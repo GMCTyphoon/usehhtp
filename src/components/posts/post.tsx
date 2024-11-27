@@ -3,7 +3,7 @@ import useHttp from "../../hooks/useHttp";
 import styles from "./todos.module.scss";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { setTitle } from "./inputSlice";
+import { setData } from "./inputSlice";
 
 const requestConfig = {
   method: "POST",
@@ -26,7 +26,7 @@ const PostTodo: React.FC = () => {
       title: dataRef.current!.value,
       id: new Date().toISOString(),
     };
-    dispatch(setTitle(userInput));
+    dispatch(setData(userInput));
     console.log("form submitted", userInput);
     sendRequest(JSON.stringify(userInput));
   };

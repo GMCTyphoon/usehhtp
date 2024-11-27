@@ -1,16 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const inputSlice = createSlice({
-  name: "userInput",
-    initialState: { title: "", id: new Date().toISOString() },
-//   initialState: {},
+export const generalSlice = createSlice({
+  name: "generalSlice",
+  initialState: { dataStore: [], count: 0 },
   reducers: {
-    setTitle(state, action) {
-      return { ...state, ...action.payload };
+    setData(state, action) {
+      state.dataStore = !action.payload.length
+        ? [...state.dataStore, action.payload]
+        : action.payload;
+    },
+
+    increment: (state, action) => {
+      state.count += action.payload;
+    },
+    decrement: (state, action) => {
+      state.count -= action.payload;
     },
   },
 });
 
-export const { setTitle } = inputSlice.actions;
-
-export default inputSlice.reducer;
+export const { setData, increment, decrement, incrementByAmount } =
+  generalSlice.actions;
+export default generalSlice.reducer;

@@ -4,15 +4,15 @@ import PostTodo from "./post";
 import styles from "./todos.module.scss";
 import classNames from "classnames";
 import React from "react";
-import { Todo } from "./types";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setData } from "./inputSlice";
 
 const requestConfig = {};
 const itemsOnPage = 5;
 
 export const Todos: React.FC = () => {
-  const inputData = useSelector((state: any) => state.userInput);
-  const [dataStore, setDataStore] = useState<Todo[]>([]);
+  const dispatch = useDispatch();
+  const dataStore = useSelector((state: any) => state.generalSlice.dataStore);
   const [pageNumber, setPageNumber] = useState<number>(1);
   const { data, isLoading, error } = useHttp(
     "https://jsonplaceholder.typicode.com/posts",
@@ -22,18 +22,9 @@ export const Todos: React.FC = () => {
 
   useEffect(() => {
     if (data.length) {
-      setDataStore(data);
+      dispatch(setData(data));
     }
   }, [data]);
-
-  useEffect(() => {
-    if (!inputData.title) {
-      return;
-    }
-    setDataStore((prevData) => {
-      return prevData.concat(inputData);
-    });
-  }, [inputData]);
 
   // Логика страниц
   const pageContent = useMemo(() => {
@@ -47,7 +38,6 @@ export const Todos: React.FC = () => {
   for (let i = 1; i <= Math.ceil(dataStore.length / itemsOnPage); i++) {
     pagesCountArray.push(i);
   }
-
   if (isLoading) {
     return <p className="center">Fethching todos...</p>;
   }
@@ -56,13 +46,11 @@ export const Todos: React.FC = () => {
     return <p>Failed to fetch todos</p>;
   }
 
-  console.log(pageContent);
-  console.log(inputData);
   return (
     <>
       <PostTodo />
       <ul className={styles.ul}>
-        {pageContent.map((item) => (
+        {pageContent.map((item: any) => (
           <li className={styles.li} key={item.id}>
             {item.title}
           </li>
