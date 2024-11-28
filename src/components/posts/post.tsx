@@ -2,8 +2,8 @@ import { useRef } from "react";
 import useHttp from "../../hooks/useHttp";
 import styles from "./todos.module.scss";
 import React from "react";
-import { Todo } from "./types";
-import { TodoProps } from "./types";
+import { setData } from "./inputSlice";
+import { useAppDispatch } from "../../app/hooks";
 
 const requestConfig = {
   method: "POST",
@@ -12,9 +12,9 @@ const requestConfig = {
   },
 };
 
+const PostTodo: React.FC = () => {
+  const dispatch = useAppDispatch();
 
-
-const PostTodo: React.FC<TodoProps> = ({ onUserInput }) => {
   const { error, sendRequest } = useHttp(
     "https://jsonplaceholder.typicode.com/posts",
     requestConfig
@@ -22,14 +22,13 @@ const PostTodo: React.FC<TodoProps> = ({ onUserInput }) => {
   const dataRef = useRef<HTMLInputElement>(null);
   const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
-    const inputData: Todo = {
+    const userInput = {
       title: dataRef.current!.value,
       id: new Date().toISOString(),
     };
-    sendRequest(JSON.stringify(inputData));
-
-    onUserInput(inputData);
-    dataRef.current!.value = "";
+    dispatch(setData(userInput));
+    console.log("form submitted", userInput);
+    sendRequest(JSON.stringify(userInput));
   };
 
   return (
