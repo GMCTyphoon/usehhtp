@@ -4,15 +4,16 @@ import PostTodo from "./post";
 import styles from "./todos.module.scss";
 import classNames from "classnames";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { setData } from "./inputSlice";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 const requestConfig = {};
 const itemsOnPage = 5;
 
 export const Todos: React.FC = () => {
-  const dispatch = useDispatch();
-  const dataStore = useSelector((state: any) => state.generalSlice.dataStore);
+  const dispatch = useAppDispatch();
+
+  const dataStore = useAppSelector((state) => state.generalSlice.dataStore);
   const [pageNumber, setPageNumber] = useState<number>(1);
   const { data, isLoading, error } = useHttp(
     "https://jsonplaceholder.typicode.com/posts",

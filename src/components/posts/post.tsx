@@ -2,8 +2,8 @@ import { useRef } from "react";
 import useHttp from "../../hooks/useHttp";
 import styles from "./todos.module.scss";
 import React from "react";
-import { useDispatch } from "react-redux";
 import { setData } from "./inputSlice";
+import { useAppDispatch } from "../../app/hooks";
 
 const requestConfig = {
   method: "POST",
@@ -13,7 +13,7 @@ const requestConfig = {
 };
 
 const PostTodo: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const { error, sendRequest } = useHttp(
     "https://jsonplaceholder.typicode.com/posts",
